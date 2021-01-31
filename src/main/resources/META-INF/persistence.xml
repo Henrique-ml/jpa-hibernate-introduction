@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1"> <!-- JPA versão 2.1 -->
+
+	<!-- 
+	- <persistence-unit>: elemento que ontém as configurações necessárias
+	- name="exemplo-jpa": apelido que referencia esse elemento <persistence-unit>
+	- transaction-type="RESOURCE_LOCAL": significa que as transações serão gerenciadas manualmente -->
+	<persistence-unit name="exemplo-jpa" transaction-type="RESOURCE_LOCAL">
+		<properties>
+
+			<!-- Propriedade de conexão com o MySQL
+			
+			- name="javax.persistence.jdbc.url": a URL do banco de dados 
+			
+			value="jdbc:mysql://localhost/aulajpa?useSSL=false&amp;serverTimezone=UTC":
+			- jdbc:mysql://localhost: sintaxe de string de uma conexão MySQL
+			- localhost: o host do banco de dados, nesse caso é a máquina local, mas pode ser o IP da internet que hospeda o banco de dados
+			- /aulajpa: nome da base de dados (o que aemazena as tabela)
+			- ?: iniciar atributos
+			- useSSL=false: atributo - não mexeremos com SSL
+			- &amp;: para funcionar na maioria dos computadores 
+			- serverTimezone=UTC: ficar no horário da zona/país -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/aulajpa?useSSL=false&amp;serverTimezone=UTC" />
+
+			<!-- Propriedade do driver do MySQL -->
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+
+			<!-- Propriedade de usuário do MySQL -->
+			<property name="javax.persistence.jdbc.user" value="root" />
+
+			<!-- Propriedade de senha do usuário do MySQL -->
+			<property name="javax.persistence.jdbc.password" value="paraquesenha" />
+
+			<!-- Propriedade de gerar o banco de dados automaticamente
+			
+			- value="update": sempre que rodar a aplicaçã o banco de dados vai ser atualizado automaticamente conforme as classes de dominio da aplicação 
+			Ex: Caso se acrescente um atributo em uma classe de domínio, ao rodar a aplicação, automaticamente será acrescentada uma coluna na tabela do BD
+			Dessa forma a aplicação fica prototipicamente rápida, e não precisa ficar mexendo com comandos SQL no BD
+			- value="create": Ou seja, caso fosse esse "create", toda vez que a aplicação rodasse o BD será recriado, ou seja, apagar o antigo e recriá-lo novamente -->  
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+
+			<!-- https://docs.jboss.org/hibernate/orm/5.4/javadocs/org/hibernate/dialect/package-summary.html -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
+		</properties>
+	</persistence-unit>
+</persistence>
